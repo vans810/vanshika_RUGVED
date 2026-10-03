@@ -1,5 +1,4 @@
-import math
-from turtle import clear
+#import math
 import matplotlib.pyplot as plt
 
 # Initial pose
