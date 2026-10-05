@@ -1,4 +1,4 @@
-#import math
+import math
 import matplotlib.pyplot as plt
 
 # Initial pose
@@ -42,14 +42,17 @@ while True:
         # Move in the direction the robot is currently facing
         x += value * math.cos(math.radians(theta))
         y += value * math.sin(math.radians(theta))
+        
 
     elif action == "left":
         # Rotate counter-clockwise
         theta += value
+        trajectory.append((x, y, theta))
 
     elif action == "right":
         # Rotate clockwise
         theta -= value
+        trajectory.append((x, y, theta))
 
     else:
         print("Invalid command.")
@@ -59,7 +62,7 @@ while True:
     theta %= 360
 
     # Store new waypoint
-    trajectory.append((x, y, theta))
+   
 
     # Terminal output
     print(
@@ -73,7 +76,7 @@ while True:
 # Plot the trajectory
 # -----------------------------
 
-xs = [point[0] for point in trajectory]
+xs = [point[0] for point in  trajectory]
 ys = [point[1] for point in trajectory]
 thetas = [point[2] for point in trajectory]
 
@@ -87,7 +90,10 @@ plt.scatter(xs[0], ys[0], marker='s', s=100, label="Start")
 plt.scatter(xs[-1], ys[-1], marker='X', s=100, label="End")
 
 # Heading arrows at every waypoint
-arrow_length = 0.5
+arrow_length = 1
+xs.pop(-1)
+ys.pop(-1)
+thetas.pop(-1)
 
 u = [
     arrow_length * math.cos(math.radians(theta))
@@ -100,15 +106,15 @@ v = [
 ]
 
 plt.quiver(
-    xs,
-    ys,
-    u,
-    v,
-    angles='xy',
-    scale_units='xy',
-    scale=1,
-    width=0.005
-)
+        xs,
+        ys,
+        u,
+        v,
+        angles='xy',
+        scale_units='xy',
+        scale=1,
+        width=0.01
+    )
 
 plt.xlabel("X")
 plt.ylabel("Y")
